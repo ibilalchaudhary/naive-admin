@@ -34,14 +34,6 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import('@/views/setting/account/account.vue'),
       },
-      {
-        path: 'system',
-        name: 'setting-system',
-        meta: {
-          title: '系统设置',
-        },
-        component: () => import('@/views/setting/system/system.vue'),
-      },
     ],
   },
 ];

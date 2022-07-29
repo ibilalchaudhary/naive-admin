@@ -278,16 +278,6 @@
                 <span class="text-lx text-center">系统管理</span>
               </div>
             </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
-              <div class="flex flex-col justify-center text-gray-500">
-                <span class="text-center">
-                  <n-icon size="30" color="">
-                    <DashboardOutlined />
-                  </n-icon>
-                </span>
-                <span class="text-lx text-center">主控台</span>
-              </div>
-            </n-card>
           </div>
         </n-card>
         <n-card :segmented="{ content: true }" :bordered="false" size="small" class="mt-4">

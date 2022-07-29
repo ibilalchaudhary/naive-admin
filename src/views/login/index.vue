@@ -6,7 +6,6 @@
         <div class="view-account-top-logo">
           <img :src="websiteConfig.loginImage" alt="" />
         </div>
-        <div class="view-account-top-desc">{{ websiteConfig.loginDesc }}</div>
       </div>
       <div class="view-account-form">
         <n-form
@@ -17,7 +16,7 @@
           :rules="rules"
         >
           <n-form-item path="username">
-            <n-input v-model:value="formInline.username" placeholder="请输入用户名">
+            <n-input v-model:value="formInline.username" placeholder="Username">
               <template #prefix>
                 <n-icon size="18" color="#808695">
                   <PersonOutline />
@@ -30,7 +29,7 @@
               v-model:value="formInline.password"
               type="password"
               showPasswordOn="click"
-              placeholder="请输入密码"
+              placeholder="Password"
             >
               <template #prefix>
                 <n-icon size="18" color="#808695">
@@ -42,22 +41,22 @@
           <n-form-item class="default-color">
             <div class="flex justify-between">
               <div class="flex-initial">
-                <n-checkbox v-model:checked="autoLogin">自动登录</n-checkbox>
+                <n-checkbox v-model:checked="autoLogin">Remember Me</n-checkbox>
               </div>
               <div class="flex-initial order-last">
-                <a href="javascript:">忘记密码</a>
+                <a href="javascript:">Forgot Password?</a>
               </div>
             </div>
           </n-form-item>
           <n-form-item>
             <n-button type="primary" @click="handleSubmit" size="large" :loading="loading" block>
-              登录
+              Login
             </n-button>
           </n-form-item>
           <n-form-item class="default-color">
             <div class="flex view-account-other">
               <div class="flex-initial">
-                <span>其它登录方式</span>
+                <span>Other Logins</span>
               </div>
               <div class="flex-initial mx-2">
                 <a href="javascript:">
@@ -74,7 +73,7 @@
                 </a>
               </div>
               <div class="flex-initial" style="margin-left: auto">
-                <a href="javascript:">注册账号</a>
+                <a href="javascript:">Register an Account</a>
               </div>
             </div>
           </n-form-item>
@@ -111,8 +110,8 @@
   });
 
   const rules = {
-    username: { required: true, message: '请输入用户名', trigger: 'blur' },
-    password: { required: true, message: '请输入密码', trigger: 'blur' },
+    username: { required: true, message: 'User is required', trigger: 'blur' },
+    password: { required: true, message: 'Password is required', trigger: 'blur' },
   };
 
   const userStore = useUserStore();
@@ -125,7 +124,7 @@
     formRef.value.validate(async (errors) => {
       if (!errors) {
         const { username, password } = formInline;
-        message.loading('登录中...');
+        message.loading('Logging in...');
         loading.value = true;
 
         const params: FormState = {
@@ -138,12 +137,12 @@
           message.destroyAll();
           if (code == ResultEnum.SUCCESS) {
             const toPath = decodeURIComponent((route.query?.redirect || '/') as string);
-            message.success('登录成功，即将进入系统');
+            message.success('Successful login');
             if (route.name === LOGIN_NAME) {
-              router.replace('/');
-            } else router.replace(toPath);
+              await router.replace('/');
+            } else await router.replace(toPath);
           } else {
-            message.info(msg || '登录失败');
+            message.info(msg || 'Login error');
           }
         } finally {
           loading.value = false;

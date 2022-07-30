@@ -1,7 +1,7 @@
 import { ref, ComputedRef, unref, computed, onMounted, watchEffect, watch } from 'vue';
 import type { BasicTableProps } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
-import { isBoolean, isFunction, isArray } from '@/utils/is';
+import { isBoolean, isFunction } from '@/utils/is';
 import { APISETTING } from '../const';
 
 export function useDataSource(
@@ -31,8 +31,8 @@ export function useDataSource(
     return rowKey
       ? rowKey
       : () => {
-        return 'key';
-      };
+          return 'key';
+        };
   });
 
   const getDataSourceRef = computed(() => {
@@ -48,7 +48,7 @@ export function useDataSource(
       setLoading(true);
       const { request, pagination, beforeRequest, afterRequest }: any = unref(propsRef);
       if (!request) return;
-      //组装分页信息
+      //Assemble pagination information
       const pageField = APISETTING.pageField;
       const sizeField = APISETTING.sizeField;
       const totalField = APISETTING.totalField;
@@ -76,7 +76,7 @@ export function useDataSource(
       const resultTotal = res[totalField] || 0;
       const currentPage = res[pageField];
 
-      // 如果数据异常，需获取正确的页码再次执行
+      // If the data is abnormal, you need to get the correct page number and execute it again
       if (resultTotal) {
         if (page > resultTotal) {
           setPagination({

@@ -12,14 +12,6 @@ const menusList = [
     },
     children: [
       {
-        path: 'console',
-        name: 'dashboard_console',
-        component: '/dashboard/console/console',
-        meta: {
-          title: '主控台',
-        },
-      },
-      {
         path: 'monitor',
         name: 'dashboard_monitor',
         component: '/dashboard/monitor/monitor',

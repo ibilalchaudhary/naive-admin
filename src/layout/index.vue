@@ -58,7 +58,7 @@
             <MainView />
           </div>
         </div>
-        <!--1.15废弃，没啥用，占用操作空间-->
+        <!--1.15 Abandoned, useless, takes up operating space-->
         <!--        <NLayoutFooter v-if="getShowFooter">-->
         <!--          <PageFooter />-->
         <!--        </NLayoutFooter>-->
@@ -157,13 +157,13 @@
     return 'left';
   });
 
-  // 控制显示或隐藏移动端侧边栏
+  // Controls showing or hiding the mobile sidebar
   const showSideDrawder = computed({
     get: () => isMobile.value && collapsed.value,
     set: (val) => (collapsed.value = val),
   });
 
-  //判断是否触发移动端模式
+  //Determine whether to trigger mobile mode
   const checkMobileMode = () => {
     if (document.body.clientWidth <= mobileWidth) {
       isMobile.value = true;
@@ -185,7 +185,7 @@
   onMounted(() => {
     checkMobileMode();
     window.addEventListener('resize', watchWidth);
-    //挂载在 window 方便与在js中使用
+    //Mount on window for convenience and use in js
     window['$loading'] = useLoadingBar();
     window['$loading'].finish();
   });

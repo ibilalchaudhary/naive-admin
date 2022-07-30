@@ -34,18 +34,18 @@ export const LoginRoute: RouteRecordRaw = {
   name: 'Login',
   component: () => import('@/views/login/index.vue'),
   meta: {
-    title: '登录',
+    title: 'Login',
   },
 };
 
-//需要验证权限
+//Authentication permission required
 export const asyncRoutes = [...routeModuleList];
-
-//普通路由 无需验证权限
+console.log(RedirectRoute);
+//Ordinary routing without authentication authority
 export const constantRouter: any[] = [LoginRoute, RootRoute, RedirectRoute];
 
 const router = createRouter({
-  history: createWebHistory(''),
+  history: createWebHistory(),
   routes: constantRouter,
   strict: true,
   scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -53,7 +53,7 @@ const router = createRouter({
 
 export function setupRouter(app: App) {
   app.use(router);
-  // 创建路由守卫
+  // Create a route guard
   createRouterGuards(router);
 }
 

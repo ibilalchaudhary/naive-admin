@@ -148,7 +148,7 @@
           loading.value = false;
         }
       } else {
-        message.error('请填写完整信息，并且进行验证码校验');
+        message.error('Please fill in the complete information and verify the verification code');
       }
     });
   };

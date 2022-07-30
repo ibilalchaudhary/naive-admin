@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="角色权限管理">
-        页面数据为 Mock 示例数据，非真实数据。
+      <n-card :bordered="false" title="Role rights management">
+        The page data is Mock sample data, not real data.
       </n-card>
     </div>
     <n-card :bordered="false" class="mt-4 proCard">
@@ -21,7 +21,7 @@
                 <PlusOutlined />
               </n-icon>
             </template>
-            添加角色
+            Add role
           </n-button>
         </template>
 
@@ -30,7 +30,6 @@
         </template>
       </BasicTable>
     </n-card>
-
     <n-modal v-model:show="showModal" :show-icon="false" preset="dialog" :title="editRoleTitle">
       <div class="py-3 menu-list">
         <n-tree
@@ -49,13 +48,13 @@
       <template #action>
         <n-space>
           <n-button type="info" ghost icon-placement="left" @click="packHandle">
-            全部{{ expandedKeys.length ? '收起' : '展开' }}
+            all{{ expandedKeys.length ? 'collapsed' : 'expanded' }}
           </n-button>
 
           <n-button type="info" ghost icon-placement="left" @click="checkedAllHandle">
-            全部{{ checkedAll ? '取消' : '选择' }}
+            all {{ checkedAll ? 'cancel' : 'selected' }}
           </n-button>
-          <n-button type="primary" :loading="formBtnLoading" @click="confirmForm">提交</n-button>
+          <n-button type="primary" :loading="formBtnLoading" @click="confirmForm">Submit</n-button>
         </n-space>
       </template>
     </n-modal>
@@ -93,7 +92,7 @@
 
   const actionColumn = reactive({
     width: 250,
-    title: '操作',
+    title: 'Operation',
     key: 'action',
     fixed: 'right',
     render(record) {
@@ -101,17 +100,17 @@
         style: 'button',
         actions: [
           {
-            label: '菜单权限',
+            label: 'Menu permission',
             onClick: handleMenuAuth.bind(null, record),
-            // 根据业务控制是否显示 isShow 和 auth 是并且关系
+            // Whether to display isShow and auth according to business control is and relationship
             ifShow: () => {
               return true;
             },
-            // 根据权限控制是否显示: 有权限，会显示，支持多个
+            // Whether to display according to the permission control: have permission, will display, support multiple
             auth: ['basic_list'],
           },
           {
-            label: '编辑',
+            label: 'Edit',
             onClick: handleEdit.bind(null, record),
             ifShow: () => {
               return true;
@@ -119,14 +118,14 @@
             auth: ['basic_list'],
           },
           {
-            label: '删除',
+            label: 'delete',
             icon: 'ic:outline-delete-outline',
             onClick: handleDelete.bind(null, record),
-            // 根据业务控制是否显示 isShow 和 auth 是并且关系
+            // Whether to display isShow and auth according to business control is and relationship
             ifShow: () => {
               return true;
             },
-            // 根据权限控制是否显示: 有权限，会显示，支持多个
+            // Whether to display according to the permission control: have permission, will display, support multiple
             auth: ['basic_list'],
           },
         ],
@@ -155,30 +154,30 @@
     formBtnLoading.value = true;
     formRef.value.validate((errors) => {
       if (!errors) {
-        message.success('新建成功');
+        message.success('New successful');
         setTimeout(() => {
           showModal.value = false;
           reloadTable();
         });
       } else {
-        message.error('请填写完整信息');
+        message.error('Please fill in the complete information');
       }
       formBtnLoading.value = false;
     });
   }
 
   function handleEdit(record: Recordable) {
-    console.log('点击了编辑', record);
+    console.log('Clicked to edit', record);
     router.push({ name: 'basic-info', params: { id: record.id } });
   }
 
   function handleDelete(record: Recordable) {
-    console.log('点击了删除', record);
-    message.info('点击了删除');
+    console.log('Click to delete', record);
+    message.info('Click to delete');
   }
 
   function handleMenuAuth(record: Recordable) {
-    editRoleTitle.value = `分配 ${record.name} 的菜单权限`;
+    editRoleTitle.value = `Assign menu permissions for ${record.name}`;
     checkedKeys.value = record.menu_keys;
     showModal.value = true;
   }

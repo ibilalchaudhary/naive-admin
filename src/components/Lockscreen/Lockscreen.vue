@@ -16,7 +16,7 @@
           </span>
         </div>
       </div>
-      <!--充电-->
+      <!--Charge-->
       <recharge
         :battery="battery"
         :battery-status="batteryStatus"
@@ -36,7 +36,7 @@
       </div>
     </template>
 
-    <!--登录-->
+    <!--Login-->
     <template v-if="showLogin">
       <div class="login-box">
         <n-avatar :size="128">
@@ -50,7 +50,7 @@
           autofocus
           v-model:value="loginParams.password"
           @keyup.enter="onLogin"
-          placeholder="请输入登录密码"
+          placeholder="Please enter your password"
         >
           <template #suffix>
             <n-icon @click="onLogin" style="cursor: pointer">
@@ -109,7 +109,7 @@
       const useLockscreen = useLockscreenStore();
       const userStore = useUserStore();
 
-      // 获取时间
+      // Get Time
       const { month, day, hour, minute, second, week } = useTime();
       const { online } = useOnline();
 
@@ -123,17 +123,17 @@
         showLogin: false,
         loginLoading: false, // 正在登录
         isLoginError: false, //密码错误
-        errorMsg: '密码错误',
+        errorMsg: 'Wrong Password',
         loginParams: {
           username: username || '',
           password: '',
         },
       });
 
-      // 解锁登录
+      // Unlock login
       const onLockLogin = (value: boolean) => (state.showLogin = value);
 
-      // 登录
+      // Log in
       const onLogin = async () => {
         if (!state.loginParams.password.trim()) {
           return;
@@ -154,7 +154,7 @@
         state.loginLoading = false;
       };
 
-      //重新登录
+      //Re Register
       const goLogin = () => {
         onLockLogin(false);
         useLockscreen.setLock(false);

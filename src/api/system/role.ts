@@ -1,7 +1,7 @@
 import { http } from '@/utils/http/axios';
 
 /**
- * @description: 角色列表
+ * @description: role list
  */
 export function getRoleList() {
   return http.request({

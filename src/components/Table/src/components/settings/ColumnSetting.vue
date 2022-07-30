@@ -12,13 +12,13 @@
             <div class="table-toolbar-inner-popover-title">
               <n-space>
                 <n-checkbox v-model:checked="checkAll" @update:checked="onCheckAll"
-                  >列展示</n-checkbox
+                  >Column display</n-checkbox
                 >
                 <n-checkbox v-model:checked="selection" @update:checked="onSelection"
-                  >勾选列</n-checkbox
+                  >Check column</n-checkbox
                 >
                 <n-button text type="info" size="small" class="mt-1" @click="resetColumns"
-                  >重置</n-button
+                  >Reset</n-button
                 >
               </n-space>
             </div>
@@ -62,7 +62,7 @@
                             <VerticalRightOutlined />
                           </n-icon>
                         </template>
-                        <span>固定到左侧</span>
+                        <span>Fixed to the left</span>
                       </n-tooltip>
                       <n-divider vertical />
                       <n-tooltip trigger="hover" placement="bottom">
@@ -76,7 +76,7 @@
                             <VerticalLeftOutlined />
                           </n-icon>
                         </template>
-                        <span>固定到右侧</span>
+                        <span>Fixed to the right</span>
                       </n-tooltip>
                     </div>
                   </div>
@@ -87,7 +87,7 @@
         </n-popover>
       </div>
     </template>
-    <span>列设置</span>
+    <span>Column settings</span>
   </n-tooltip>
 </template>
 
@@ -143,7 +143,7 @@
         }
       });
 
-      //初始化
+      //Initialize
       function init() {
         const columns: any[] = getColumns();
         const checkList: any = columns.map((item) => item.key);
@@ -156,7 +156,7 @@
         }
       }
 
-      //切换
+      //Cutover
       function onChange(checkList) {
         if (state.selection) {
           checkList.unshift('selection');
@@ -164,12 +164,12 @@
         setColumns(checkList);
       }
 
-      //设置
+      //SetUp
       function setColumns(columns) {
         table.setColumns(columns);
       }
 
-      //获取
+      //Obtain
       function getColumns() {
         let newRet: any[] = [];
         table.getColumns().forEach((item) => {
@@ -178,7 +178,7 @@
         return newRet;
       }
 
-      //重置
+      //Reset
       function resetColumns() {
         state.checkList = [...state.defaultCheckList];
         state.checkAll = true;
@@ -193,7 +193,7 @@
         columnsList.value = newColumns;
       }
 
-      //全选
+      //Select all
       function onCheckAll(e) {
         let checkList = table.getCacheColumns(true);
         if (e) {
@@ -205,14 +205,14 @@
         }
       }
 
-      //拖拽排序
+      //Drag to sort
       function draggableEnd() {
         const newColumns = toRaw(unref(columnsList));
         columnsList.value = newColumns;
         setColumns(newColumns);
       }
 
-      //勾选列
+      //Check column
       function onSelection(e) {
         let checkList = table.getCacheColumns();
         if (e) {
@@ -229,7 +229,7 @@
         return true;
       }
 
-      //固定
+      //Fixed
       function fixedColumn(item, fixed) {
         if (!state.checkList.includes(item.key)) return;
         let columns = getColumns();

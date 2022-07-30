@@ -31,19 +31,19 @@
 
   const typeTabList = [
     {
-      name: '基本设置',
-      desc: '个人账户信息设置',
+      name: 'Basic settings',
+      desc: 'Personal account information settings',
       key: 1,
     },
     {
-      name: '安全设置',
-      desc: '密码，邮箱等设置',
+      name: 'Security Settings',
+      desc: 'Password, email and other settings',
       key: 2,
     },
   ];
 
   const type = ref(1);
-  const typeTitle = ref('基本设置');
+  const typeTitle = ref('Basic settings');
 
   function switchType(e) {
     type.value = e.key;

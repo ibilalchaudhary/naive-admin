@@ -1,7 +1,7 @@
-//获取相关CSS属性
+//Get the relevant CSS properties
 const getCss = function (o, key) {
   return o.currentStyle
-    ? o.currentStyle[key]
+    ?o.currentStyle[key]
     : document.defaultView?.getComputedStyle(o, null)[key];
 };
 
@@ -14,11 +14,11 @@ const params = {
 };
 
 const startDrag = function (bar, target, callback?) {
-  const screenWidth = document.body.clientWidth; // body当前宽度
-  const screenHeight = document.documentElement.clientHeight; // 可见区域高度
+  const screenWidth = document.body.clientWidth; // body current width
+  const screenHeight = document.documentElement.clientHeight; // visible area height
 
-  const dragDomW = target.offsetWidth; // 对话框宽度
-  const dragDomH = target.offsetHeight; // 对话框高度
+  const dragDomW = target.offsetWidth; // dialog width
+  const dragDomH = target.offsetHeight; // dialog height
 
   const minDomLeft = target.offsetLeft;
   const minDomTop = target.offsetTop;
@@ -33,12 +33,12 @@ const startDrag = function (bar, target, callback?) {
     params.top = getCss(target, 'top');
   }
 
-  //o是移动对象
+  //o is the moving object
   bar.onmousedown = function (event) {
     params.flag = true;
     if (!event) {
       event = window.event;
-      //防止IE文字选中
+      //Prevent IE text from being selected
       bar.onselectstart = function () {
         return false;
       };
@@ -67,7 +67,7 @@ const startDrag = function (bar, target, callback?) {
       let left = parseInt(params.left) + disX;
       let top = parseInt(params.top) + disY;
 
-      // 拖出屏幕边缘
+      // drag off the edge of the screen
       if (-left > minDomLeft) {
         left = -minDomLeft;
       } else if (left > maxDragDomLeft) {

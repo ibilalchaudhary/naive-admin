@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { RouteLocationNormalized } from 'vue-router';
 
-// 不需要出现在标签页中的路由
+// routes that don't need to appear in the tab
 const whiteList = ['Redirect', 'login'];
 
 export type RouteItem = Partial<RouteLocationNormalized> & {
@@ -15,10 +15,10 @@ export type RouteItem = Partial<RouteLocationNormalized> & {
 };
 
 export type ITabsViewState = {
-  tabsList: RouteItem[]; // 标签页
+  tabsList: RouteItem[]; // Tabs
 };
 
-//保留固定路由
+// keep fixed route
 function retainAffixRoute(list: any[]) {
   return list.filter((item) => item?.meta?.affix ?? false);
 }
@@ -31,11 +31,11 @@ export const useTabsViewStore = defineStore({
   getters: {},
   actions: {
     initTabs(routes) {
-      // 初始化标签页
+      // initialize the tab page
       this.tabsList = routes;
     },
     addTabs(route): boolean {
-      // 添加标签页
+      // add tab
       if (whiteList.includes(route.name)) return false;
       const isExists = this.tabsList.some((item) => item.fullPath == route.fullPath);
       if (!isExists) {
@@ -44,26 +44,26 @@ export const useTabsViewStore = defineStore({
       return true;
     },
     closeLeftTabs(route) {
-      // 关闭左侧
+      // close the left
       const index = this.tabsList.findIndex((item) => item.fullPath == route.fullPath);
       this.tabsList = this.tabsList.filter((item, i) => i >= index || (item?.meta?.affix ?? false));
     },
     closeRightTabs(route) {
-      // 关闭右侧
+      // close the right
       const index = this.tabsList.findIndex((item) => item.fullPath == route.fullPath);
       this.tabsList = this.tabsList.filter((item, i) => i <= index || (item?.meta?.affix ?? false));
     },
     closeOtherTabs(route) {
-      // 关闭其他
+      // close other
       this.tabsList = this.tabsList.filter((item) => item.fullPath == route.fullPath || (item?.meta?.affix ?? false));
     },
     closeCurrentTab(route) {
-      // 关闭当前页
+      // close the current page
       const index = this.tabsList.findIndex((item) => item.fullPath == route.fullPath);
       this.tabsList.splice(index, 1);
     },
     closeAllTabs() {
-      // 关闭全部
+      // close all
       console.log(retainAffixRoute(this.tabsList));
       this.tabsList = retainAffixRoute(this.tabsList);
     },

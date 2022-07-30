@@ -163,8 +163,6 @@
         isMultiHeaderFixed: false,
         multiTabsSetting: getMultiTabsSetting,
       });
-
-      // 获取简易的路由对象
       const getSimpleRoute = (route): RouteItem => {
         const { fullPath, hash, meta, name, params, path, query } = route;
         return { fullPath, hash, meta, name, params, path, query };
@@ -178,7 +176,7 @@
         return !(unref(navMode) === 'horizontal-mix' && mixMenu && currentRoute.meta.isRoot);
       });
 
-      //动态组装样式 菜单缩进
+      //
       const getChangeStyle = computed(() => {
         const { collapsed } = props;
         const navMode = unref(getNavMode);
@@ -203,29 +201,29 @@
         };
       });
 
-      //tags 右侧下拉菜单
+      //tags
       const TabsMenuOptions = computed(() => {
         const isDisabled = unref(tabsList).length <= 1;
         return [
           {
-            label: '刷新当前',
+            label: 'Reload',
             key: '1',
             icon: renderIcon(ReloadOutlined),
           },
           {
-            label: `关闭当前`,
+            label: `Close`,
             key: '2',
             disabled: unref(isCurrent) || isDisabled,
             icon: renderIcon(CloseOutlined),
           },
           {
-            label: '关闭其他',
+            label: 'Close Other',
             key: '3',
             disabled: isDisabled,
             icon: renderIcon(ColumnWidthOutlined),
           },
           {
-            label: '关闭全部',
+            label: 'Close All',
             key: '4',
             disabled: isDisabled,
             icon: renderIcon(MinusOutlined),
@@ -242,7 +240,6 @@
         cacheRoutes = [simpleRoute];
       }
 
-      // 将最新的路由信息同步到 localStorage 中
       const routes = router.getRoutes();
       cacheRoutes.forEach((cacheRoute) => {
         const route = routes.find((route) => route.path === cacheRoute.path);
@@ -251,11 +248,8 @@
           cacheRoute.name = (route.name || cacheRoute.name) as string;
         }
       });
-
-      // 初始化标签页
       tabsViewStore.initTabs(cacheRoutes);
 
-      //监听滚动条
       function onScroll(e) {
         let scrollTop =
           e.target.scrollTop ||
@@ -271,7 +265,7 @@
 
       window.addEventListener('scroll', onScroll, true);
 
-      // 移除缓存组件名称
+      // remove cache component name
       const delKeepAliveCompName = () => {
         if (route.meta.keepAlive) {
           const name = router.currentRoute.value.matched.find((item) => item.name == route.name)
@@ -284,7 +278,7 @@
         }
       };
 
-      // 标签页列表
+      // Tab List
       const tabsList: any = computed(() => tabsViewStore.tabsList);
       const whiteList: string[] = [
         PageEnum.BASE_LOGIN_NAME,
@@ -303,19 +297,18 @@
         { immediate: true }
       );
 
-      // 在页面关闭或刷新之前，保存数据
-      window.addEventListener('beforeunload', () => {
-        storage.set(TABS_ROUTES, JSON.stringify(tabsList.value));
-      });
+      // window.addEventListener('beforeunload', () => {
+      // storage.remove(TABS_ROUTES);
+      // storage.set(TABS_ROUTES, JSON.stringify(tabsList.value));
+      // });
 
-      // 关闭当前页面
       const removeTab = (route) => {
         if (tabsList.value.length === 1) {
-          return message.warning('这已经是最后一页，不能再关闭了！');
+          return message.warning('This is the last page and cannot be closed anymore!');
         }
         delKeepAliveCompName();
         tabsViewStore.closeCurrentTab(route);
-        // 如果关闭的是当前页
+        // If the current page is closed
         if (state.activeKey === route.fullPath) {
           const currentRoute = tabsList.value[Math.max(0, tabsList.value.length - 1)];
           state.activeKey = currentRoute.fullPath;
@@ -324,7 +317,7 @@
         updateNavScroll();
       };
 
-      // 刷新页面
+      // REFRESH PAGE
       const reloadPage = () => {
         delKeepAliveCompName();
         router.push({
@@ -332,10 +325,10 @@
         });
       };
 
-      // 注入刷新页面方法
+      // Inject refresh page method
       provide('reloadPage', reloadPage);
 
-      // 关闭左侧
+      // CLOSE LEFT
       const closeLeft = (route) => {
         tabsViewStore.closeLeftTabs(route);
         state.activeKey = route.fullPath;
@@ -343,7 +336,7 @@
         updateNavScroll();
       };
 
-      // 关闭右侧
+      // CLOSE RIGHT
       const closeRight = (route) => {
         tabsViewStore.closeRightTabs(route);
         state.activeKey = route.fullPath;
@@ -351,7 +344,7 @@
         updateNavScroll();
       };
 
-      // 关闭其他
+      // CLOSE OTHER
       const closeOther = (route) => {
         tabsViewStore.closeOtherTabs(route);
         state.activeKey = route.fullPath;
@@ -359,29 +352,29 @@
         updateNavScroll();
       };
 
-      // 关闭全部
+      // CLOSE ALL
       const closeAll = () => {
         tabsViewStore.closeAllTabs();
         router.replace(PageEnum.BASE_HOME);
         updateNavScroll();
       };
 
-      //tab 操作
+      //tab operating
       const closeHandleSelect = (key) => {
         switch (key) {
-          //刷新
+          //REFRESH
           case '1':
             reloadPage();
             break;
-          //关闭
+          //Close
           case '2':
             removeTab(route);
             break;
-          //关闭其他
+          //CLOSE OTHER
           case '3':
             closeOther(route);
             break;
-          //关闭所有
+          //CLOSE ALL
           case '4':
             closeAll();
             break;
@@ -391,8 +384,8 @@
       };
 
       /**
-       * @param value 要滚动到的位置
-       * @param amplitude 每次滚动的长度
+       * @param value POSITION TO SCROLL TO
+       * @param amplitude LENGTH OF EACH SCROLL
        */
       function scrollTo(value: number, amplitude: number) {
         const currentScroll = navScroll.value.scrollLeft;
@@ -429,7 +422,7 @@
       }
 
       /**
-       * @param autoScroll 是否开启自动滚动功能
+       * @param autoScroll Whether to enable automatic scrolling
        */
       async function updateNavScroll(autoScroll?: boolean) {
         await nextTick();
@@ -472,7 +465,7 @@
         state.showDropdown = false;
       }
 
-      //tags 跳转页面
+      //tags JUMP PAGE
       function goPage(e) {
         const { fullPath } = e;
         if (fullPath === route.fullPath) return;
@@ -480,7 +473,7 @@
         go(e, true);
       }
 
-      //删除tab
+      //DELETE TAB
       function closeTabItem(e) {
         const { fullPath } = e;
         const routeInfo = tabsList.value.find((item) => item.fullPath == fullPath);

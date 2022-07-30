@@ -3,7 +3,7 @@ import { propTypes } from '@/utils/propTypes';
 import { BasicColumn } from './types/table';
 import { NDataTable } from 'naive-ui';
 export const basicProps = {
-  ...NDataTable.props, // 这里继承原 UI 组件的 props
+  ...NDataTable.props, // This inherits the props of the original UI component
   title: {
     type: String,
     default: null,
@@ -45,7 +45,7 @@ export const basicProps = {
     type: [Object, Boolean],
     default: () => {},
   },
-  //废弃
+  //discard
   showPagination: {
     type: [String, Boolean],
     default: 'auto',

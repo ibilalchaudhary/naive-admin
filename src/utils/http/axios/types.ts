@@ -7,53 +7,53 @@ export interface CreateAxiosOptions extends AxiosRequestConfig {
   authenticationScheme?: string;
 }
 
-// 上传文件
+// upload files
 export interface UploadFileParams {
-  // 其他参数
+  // Other parameters
   data?: Recordable;
-  // 文件参数接口字段名
+  // File parameter interface field name
   name?: string;
-  // 文件
+  // document
   file: File | Blob;
-  // 文件名称
+  // file name
   filename?: string;
   [key: string]: any;
 }
 
 export interface RequestOptions {
-  // 请求参数拼接到url
+  // request parameters are spliced ​​to the url
   joinParamsToUrl?: boolean;
-  // 格式化请求参数时间
+  // format request parameter time
   formatDate?: boolean;
-  // 是否显示提示信息
+  // Whether to display the prompt information
   isShowMessage?: boolean;
-  // 是否解析成JSON
+  // Whether to parse into JSON
   isParseToJson?: boolean;
-  // 成功的文本信息
+  // success text message
   successMessageText?: string;
-  // 是否显示成功信息
+  // Whether to display success information
   isShowSuccessMessage?: boolean;
-  // 是否显示失败信息
+  // Whether to display failure information
   isShowErrorMessage?: boolean;
-  // 错误的文本信息
+  // wrong text message
   errorMessageText?: string;
-  // 是否加入url
+  // whether to add url
   joinPrefix?: boolean;
-  // 接口地址， 不填则使用默认apiUrl
+  // Interface address, if not filled, use the default apiUrl
   apiUrl?: string;
-  // 请求拼接路径
+  // request splicing path
   urlPrefix?: string;
-  // 错误消息提示类型
+  // error message prompt type
   errorMessageMode?: 'none' | 'modal';
-  // 是否添加时间戳
+  // whether to add timestamp
   joinTime?: boolean;
-  // 不进行任何处理，直接返回
+  // don't do anything, just return
   isTransformResponse?: boolean;
-  // 是否返回原生响应头
+  // Whether to return native response headers
   isReturnNativeResponse?: boolean;
-  //忽略重复请求
+  // ignore duplicate requests
   ignoreCancelToken?: boolean;
-  // 是否携带token
+  // Whether to carry the token
   withToken?: boolean;
 }
 

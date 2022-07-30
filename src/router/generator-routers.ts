@@ -9,7 +9,7 @@ const LayoutMap = new Map<string, () => Promise<typeof import('*.vue')>>();
 LayoutMap.set('LAYOUT', Layout);
 
 /**
- * 格式化 后端 结构信息并递归生成层级路由表
+ * Format backend structure information and recursively generate hierarchical routing table
  * @param routerMap
  * @param parent
  * @returns {*}
@@ -17,13 +17,13 @@ LayoutMap.set('LAYOUT', Layout);
 export const routerGenerator = (routerMap, parent?): any[] => {
   return routerMap.map((item) => {
     const currentRouter: any = {
-      // 路由地址 动态拼接生成如 /dashboard/workplace
+      // Routing address is dynamically spliced to generate such as /dashboard/workplace
       path: `${(parent && parent.path) || ''}/${item.path}`,
-      // 路由名称，建议唯一
+      // Route name, it is recommended to be unique
       name: item.name || '',
-      // 该路由对应页面的 组件
+      // The component of the page corresponding to this route
       component: item.component,
-      // meta: 页面标题, 菜单图标, 页面权限(供指令权限用，可去掉)
+      // meta: Page title, menu icon, page permission (for command permission, can be removed)
       meta: {
         ...item.meta,
         label: item.meta.title,
@@ -32,13 +32,13 @@ export const routerGenerator = (routerMap, parent?): any[] => {
       },
     };
 
-    // 为了防止出现后端返回结果不规范，处理有可能出现拼接出两个 反斜杠
+    // In order to prevent irregular return results from the backend, two backslashes may be spliced into the processing.
     currentRouter.path = currentRouter.path.replace('//', '/');
-    // 重定向
+    // REDIRECT
     item.redirect && (currentRouter.redirect = item.redirect);
-    // 是否有子菜单，并递归处理
+    // Whether to have submenus, and process recursively
     if (item.children && item.children.length > 0) {
-      //如果未定义 redirect 默认第一个子路由为 redirect
+      //If redirect is not defined, the default first sub-route is redirect
       !item.redirect && (currentRouter.redirect = `${item.path}/${item.children[0].path}`);
       // Recursion
       currentRouter.children = routerGenerator(item.children, currentRouter);
@@ -48,7 +48,7 @@ export const routerGenerator = (routerMap, parent?): any[] => {
 };
 
 /**
- * 动态生成菜单
+ * Dynamically generate menus
  * @returns {Promise<Router>}
  */
 export const generatorDynamicRouter = (): Promise<RouteRecordRaw[]> => {
@@ -67,7 +67,7 @@ export const generatorDynamicRouter = (): Promise<RouteRecordRaw[]> => {
 };
 
 /**
- * 查找views中对应的组件文件
+ * Find the corresponding component file in views
  * */
 let viewsModules: Record<string, () => Promise<Recordable>>;
 export const asyncImportRoute = (routes: AppRouteRecordRaw[] | undefined): void => {
@@ -94,7 +94,7 @@ export const asyncImportRoute = (routes: AppRouteRecordRaw[] | undefined): void 
 };
 
 /**
- * 动态导入
+ * DYNAMIC IMPORT
  * */
 export const dynamicImport = (
   viewsModules: Record<string, () => Promise<Recordable>>,

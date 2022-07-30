@@ -1,10 +1,10 @@
 import { ComponentType } from '../../types/componentType';
 
 /**
- * @description: 生成placeholder
+ * @description: Generate placeholder
  */
 export function createPlaceholderMessage(component: ComponentType) {
-  if (component === 'NInput') return '请输入';
+  if (component === 'NInput') return 'Please enter';
   if (
     ['NPicker', 'NSelect', 'NCheckbox', 'NRadio', 'NSwitch', 'NDatePicker', 'NTimePicker'].includes(
       component

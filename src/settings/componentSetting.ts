@@ -1,31 +1,31 @@
 export default {
   table: {
     apiSetting: {
-      // 当前页的字段名
+      // field name of the current page
       pageField: 'page',
-      // 每页数量字段名
+      // Quantity per page field name
       sizeField: 'pageSize',
-      // 接口返回的数据字段名
+      // The name of the data field returned by the interface
       listField: 'list',
-      // 接口返回总页数字段名
+      // The interface returns the total page number field name
       totalField: 'pageCount',
     },
-    //默认分页数量
+    //Default number of pagination
     defaultPageSize: 10,
-    //可切换每页数量集合
+    //Can switch the number of sets per page
     pageSizes: [10, 20, 30, 40, 50],
   },
   upload: {
-    //考虑接口规范不同
+    //Consider different interface specifications
     apiSetting: {
-      // 集合字段名
+      // collection field name
       infoField: 'data',
-      // 图片地址字段名
+      // Image address field name
       imgField: 'photo',
     },
-    //最大上传图片大小
+    //Maximum upload image size
     maxSize: 2,
-    //图片上传类型
+    //image upload type
     fileType: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/svg+xml'],
   },
 };

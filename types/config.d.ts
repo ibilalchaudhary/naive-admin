@@ -1,19 +1,19 @@
 export interface ProjectSettingState {
-  //导航模式
+  //navigation mode
   navMode: string;
-  //导航风格
+  //navigation style
   navTheme: string;
-  //顶部设置
+  // top settings
   headerSetting: object;
-  //页脚
+  //footer
   showFooter: boolean;
-  //菜单设置
+  //Menu Settings
   menuSetting: object;
-  //多标签
+  //Multiple tags
   multiTabsSetting: object;
-  //面包屑
+  //Bread crumbs
   crumbsSetting: object;
-  //权限模式
+  // permission mode
   permissionMode: string;
 }
 
@@ -57,18 +57,18 @@ export interface GlobConfig {
 }
 
 export interface GlobEnvConfig {
-  // 标题
+  // title
   VITE_GLOB_APP_TITLE: string;
-  // 接口地址
+  // interface address
   VITE_GLOB_API_URL: string;
-  // 接口前缀
+  // interface prefix
   VITE_GLOB_API_URL_PREFIX?: string;
   // Project abbreviation
   VITE_GLOB_APP_SHORT_NAME: string;
-  // 图片上传地址
+  // image upload address
   VITE_GLOB_UPLOAD_URL?: string;
-  //图片前缀地址
+  //image prefix address
   VITE_GLOB_IMG_URL?: string;
-  //生产环境开启mock
+  //Enable mock in production environment
   VITE_GLOB_PROD_MOCK: boolean;
 }

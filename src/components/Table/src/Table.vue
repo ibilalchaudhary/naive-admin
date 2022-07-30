@@ -1,6 +1,6 @@
 <template>
   <div class="table-toolbar">
-    <!--顶部左侧区域-->
+    <!--top left area-->
     <div class="flex items-center table-toolbar-left">
       <template v-if="title">
         <div class="table-toolbar-left-title">
@@ -19,21 +19,21 @@
     </div>
 
     <div class="flex items-center table-toolbar-right">
-      <!--顶部右侧区域-->
+      <!--top right area-->
       <slot name="toolbar"></slot>
 
-      <!--斑马纹-->
+      <!--Zebra-->
       <n-tooltip trigger="hover">
         <template #trigger>
           <div class="mr-2 table-toolbar-right-icon">
             <n-switch v-model:value="isStriped" @update:value="setStriped" />
           </div>
         </template>
-        <span>表格斑马纹</span>
+        <span>Tabular Zebra</span>
       </n-tooltip>
       <n-divider vertical />
 
-      <!--刷新-->
+      <!--refresh-->
       <n-tooltip trigger="hover">
         <template #trigger>
           <div class="table-toolbar-right-icon" @click="reload">
@@ -42,10 +42,10 @@
             </n-icon>
           </div>
         </template>
-        <span>刷新</span>
+        <span>refresh</span>
       </n-tooltip>
 
-      <!--密度-->
+      <!--density-->
       <n-tooltip trigger="hover">
         <template #trigger>
           <div class="table-toolbar-right-icon">
@@ -61,10 +61,10 @@
             </n-dropdown>
           </div>
         </template>
-        <span>密度</span>
+        <span>density</span>
       </n-tooltip>
 
-      <!--表格设置单独抽离成组件-->
+      <!--Table settings are separated into components separately-->
       <ColumnSetting />
     </div>
   </div>
@@ -117,17 +117,17 @@
   const densityOptions = [
     {
       type: 'menu',
-      label: '紧凑',
+      label: 'compact',
       key: 'small',
     },
     {
       type: 'menu',
-      label: '默认',
+      label: 'default',
       key: 'medium',
     },
     {
       type: 'menu',
-      label: '宽松',
+      label: 'Loose',
       key: 'large',
     },
   ];
@@ -187,32 +187,32 @@
         isColumnSetting: false,
       });
 
-      //页码切换
+      //page switching
       function updatePage(page) {
         setPagination({ page: page });
         reload();
       }
 
-      //分页数量切换
+      //Switch the number of pages
       function updatePageSize(size) {
         setPagination({ page: 1, pageSize: size });
         reload();
       }
 
-      //密度切换
+      //density switching
       function densitySelect(e) {
         state.tableSize = e;
       }
 
-      //选中行
+      //selected row
       function updateCheckedRowKeys(rowKeys) {
         emit('update:checked-row-keys', rowKeys);
       }
 
-      //获取表格大小
+      //get table size
       const getTableSize = computed(() => state.tableSize);
 
-      //组装表格信息
+      //Assembly form information
       const getBindValues = computed(() => {
         const tableData = unref(getDataSourceRef);
         const maxHeight = tableData.length ? `${unref(deviceHeight)}px` : 'auto';
@@ -228,7 +228,7 @@
         };
       });
 
-      //获取分页信息
+      //Get pagination information
       const pagination = computed(() => toRaw(unref(getPaginationInfo)));
 
       function setProps(props: Partial<BasicTableProps>) {

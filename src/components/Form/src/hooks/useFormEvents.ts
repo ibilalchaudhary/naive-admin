@@ -26,12 +26,12 @@ export function useFormEvents({
   loadingSub,
   handleFormValues,
 }: UseFormActionContext) {
-  // 验证
+  // Verify
   async function validate() {
     return unref(formElRef)?.validate();
   }
 
-  // 提交
+  // Submit
   async function handleSubmit(e?: Event): Promise<void> {
     e && e.preventDefault();
     loadingSub.value = true;
@@ -53,13 +53,13 @@ export function useFormEvents({
     }
   }
 
-  //清空校验
+  //Clear Validation
   async function clearValidate() {
     // @ts-ignore
     await unref(formElRef)?.restoreValidation();
   }
 
-  //重置
+  //Reset
   async function resetFields(): Promise<void> {
     const { resetFunc, submitOnReset } = unref(getProps);
     resetFunc && isFunction(resetFunc) && (await resetFunc());
@@ -75,14 +75,14 @@ export function useFormEvents({
     submitOnReset && (await handleSubmit());
   }
 
-  //获取表单值
+  //Get Form Value
   function getFieldsValue(): Recordable {
     const formEl = unref(formElRef);
     if (!formEl) return {};
     return handleFormValues(toRaw(unref(formModel)));
   }
 
-  //设置表单字段值
+  //Set form field values
   async function setFieldsValue(values: Recordable): Promise<void> {
     const fields = unref(getSchema)
       .map((item) => item.field)

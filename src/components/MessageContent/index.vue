@@ -5,7 +5,7 @@
   export default {
     name: 'MessageContent',
     setup() {
-      //挂载在 window 方便与在js中使用
+      //Mount on window for convenience and use in js
       window['$message'] = useMessage();
     },
   };

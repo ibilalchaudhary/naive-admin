@@ -5,15 +5,15 @@ export interface ActionItem extends Partial<InstanceType<typeof NButton>> {
   onClick?: Fn;
   label?: string;
   type?: 'success' | 'error' | 'warning' | 'info' | 'primary' | 'default';
-  // 设定 color 后会覆盖 type 的样式
+  // After setting color, it will override the style of type
   color?: string;
   icon?: Component;
   popConfirm?: PopConfirm;
   disabled?: boolean;
   divider?: boolean;
-  // 权限编码控制是否显示
+  // Whether the permission code control is displayed
   auth?: PermissionsEnum | PermissionsEnum[] | string | string[];
-  // 业务控制是否显示
+  // Whether the business control is displayed
   ifShow?: boolean | ((action: ActionItem) => boolean);
 }
 

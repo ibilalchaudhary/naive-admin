@@ -1,5 +1,5 @@
 /**
- * 这里按需引入lodash的一些方法,方便维护
+ * Here are some methods of introducing lodash as needed to facilitate maintenance
  */
 
 //  export  {default as xxx} from 'lodash/xxx'

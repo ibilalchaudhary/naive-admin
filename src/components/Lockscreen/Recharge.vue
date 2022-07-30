@@ -10,10 +10,10 @@
     <div class="charging">
       <div>{{ batteryStatus }}</div>
       <div v-show="Number.isFinite(battery.dischargingTime) && battery.dischargingTime != 0">
-        剩余可使用时间：{{ calcDischargingTime }}
+        Remaining available time：{{ calcDischargingTime }}
       </div>
       <span v-show="Number.isFinite(battery.chargingTime) && battery.chargingTime != 0">
-        距离电池充满需要：{{ calcChargingTime }}
+        Required time for battery to full：{{ calcChargingTime }}
       </span>
     </div>
   </div>
@@ -27,12 +27,12 @@
     // props: ['batteryStatus', 'battery', 'calcDischargingTime'],
     props: {
       battery: {
-        // 电池对象
+        // Battery Object
         type: Object,
         default: () => ({}),
       },
       calcDischargingTime: {
-        // 电池剩余时间可用时间
+        // Battery remaining time available time
         type: String,
         default: '',
       },
@@ -41,9 +41,10 @@
         default: '',
       },
       batteryStatus: {
-        // 电池状态
+        // battery status
         type: String,
-        validator: (val: string) => ['充电中', '已充满', '已断开电源'].includes(val),
+        validator: (val: string) =>
+          ['Charging', 'To Be filled', 'Power Disconnected'].includes(val),
       },
     },
   });

@@ -1,14 +1,14 @@
-// 默认缓存期限为7天
+// The default cache period is 7 days
 const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7;
 
 /**
- * 创建本地缓存对象
+ * Create a local cache object
  * @param {string=} prefixKey -
  * @param {Object} [storage=localStorage] - sessionStorage | localStorage
  */
 export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) => {
   /**
-   * 本地缓存类
+   * Local cache class
    * @class Storage
    */
   const Storage = class {
@@ -20,9 +20,9 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
     }
 
     /**
-     * @description 设置缓存
-     * @param {string} key 缓存键
-     * @param {*} value 缓存值
+     * @description set cache
+     * @param {string} key cache key
+     * @param {*} value cache value
      * @param expire
      */
     set(key: string, value: any, expire: number | null = DEFAULT_CACHE_TIME) {
@@ -34,9 +34,9 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
     }
 
     /**
-     * 读取缓存
-     * @param {string} key 缓存键
-     * @param {*=} def 默认值
+     * read cache
+     * @param {string} key cache key
+     * @param {*=} def default value
      */
     get(key: string, def: any = null) {
       const item = this.storage.getItem(this.getKey(key));
@@ -44,7 +44,7 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
         try {
           const data = JSON.parse(item);
           const { value, expire } = data;
-          // 在有效期内直接返回
+          // return directly within the validity period
           if (expire === null || expire >= Date.now()) {
             return value;
           }
@@ -55,9 +55,8 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
       }
       return def;
     }
-
     /**
-     * 从缓存删除某项
+     * delete an item from the cache
      * @param {string} key
      */
     remove(key: string) {
@@ -65,19 +64,19 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
     }
 
     /**
-     * 清空所有缓存
-     * @memberOf Cache
+     * Clear all cache
+     * @memberOfCache
      */
     clear(): void {
       this.storage.clear();
     }
 
     /**
-     * 设置cookie
-     * @param {string} name cookie 名称
-     * @param {*} value cookie 值
-     * @param {number=} expire 过期时间
-     * 如果过期时间为设置，默认关闭浏览器自动删除
+     * Set cookies
+     * @param {string} name cookie name
+     * @param {*} value cookie value
+     * @param {number=} expire expiration time
+     * If the expiration time is set, the browser will be automatically deleted by default
      * @example
      */
     setCookie(name: string, value: any, expire: number | null = DEFAULT_CACHE_TIME) {
@@ -85,7 +84,7 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
     }
 
     /**
-     * 根据名字获取cookie值
+     * Get cookie value by name
      * @param name
      */
     getCookie(name: string): string {
@@ -100,7 +99,7 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
     }
 
     /**
-     * 根据名字删除指定的cookie
+     * Delete the specified cookie by name
      * @param {string} key
      */
     removeCookie(key: string) {
@@ -108,7 +107,7 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
     }
 
     /**
-     * 清空cookie，使所有cookie失效
+     * Clear cookies, invalidate all cookies
      */
     clearCookie(): void {
       const keys = document.cookie.match(/[^ =;]+(?==)/g);

@@ -4,7 +4,7 @@ export function usePermission() {
   const userStore = useUserStore();
 
   /**
-   * 检查权限
+   * Check permissions
    * @param accesses
    */
   function _somePermissions(accesses: string[]) {
@@ -15,8 +15,9 @@ export function usePermission() {
   }
 
   /**
-   * 判断是否存在权限
-   * 可用于 v-if 显示逻辑
+   *
+   * Determine if there is permission
+   * Can be used for v-if display logic
    * */
   function hasPermission(accesses: string[]): boolean {
     if (!accesses || !accesses.length) return true;
@@ -24,7 +25,7 @@ export function usePermission() {
   }
 
   /**
-   * 是否包含指定的所有权限
+   * Whether to include all the specified permissions
    * @param accesses
    */
   function hasEveryPermission(accesses: string[]): boolean {
@@ -36,7 +37,7 @@ export function usePermission() {
   }
 
   /**
-   * 是否包含其中某个权限
+   * Whether to include one of these permissions
    * @param accesses
    * @param accessMap
    */

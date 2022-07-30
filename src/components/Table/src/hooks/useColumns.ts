@@ -51,7 +51,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
         return hasPermission(column.auth as string[]) && isIfShow(column);
       })
       .map((column) => {
-        //默认 ellipsis 为true
+        //Default ellipsis is true
         column.ellipsis = typeof column.ellipsis === 'undefined' ? { tooltip: true } : false;
         const { edit } = column;
         if (edit) {
@@ -72,7 +72,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
                     }
                   ),
                 ]),
-                '该列可编辑'
+                'This column is editable'
               );
             };
           }
@@ -98,7 +98,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
       });
   }
 
-  //设置
+  //SetUp
   function setColumns(columnList: string[]) {
     const columns: any[] = cloneDeep(columnList);
     if (!isArray(columns)) return;
@@ -108,7 +108,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
       return;
     }
     const cacheKeys = cacheColumns.map((item) => item.key);
-    //针对拖拽排序
+    //Sort by drag and drop
     if (!isString(columns[0])) {
       columnsRef.value = columns;
     } else {
@@ -127,7 +127,7 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
     }
   }
 
-  //获取
+  //Obtain
   function getColumns(): BasicColumn[] {
     const columns = toRaw(unref(getColumnsRef));
     return columns.map((item) => {
@@ -135,12 +135,12 @@ export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
     });
   }
 
-  //获取原始
+  //get the original
   function getCacheColumns(isKey?: boolean): any[] {
     return isKey ? cacheColumns.map((item) => item.key) : cacheColumns;
   }
 
-  //更新原始数据单个字段
+  //Update a single field of raw data
   function setCacheColumnsField(key: string | undefined, value: Partial<BasicColumn>) {
     if (!key || !value) {
       return;

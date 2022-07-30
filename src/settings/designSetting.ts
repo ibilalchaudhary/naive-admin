@@ -21,12 +21,11 @@ export const appThemeList: string[] = [
 ];
 
 const setting = {
-  //深色主题
+  // dark theme
   darkTheme: false,
-  //系统主题色
+  //system theme color
   appTheme: '#2d8cf0',
-  //系统内置主题色列表
+  //System built-in theme color list
   appThemeList,
 };
-
 export default setting;

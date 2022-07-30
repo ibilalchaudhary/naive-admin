@@ -117,7 +117,7 @@
           })
           .map((action) => {
             const { popConfirm } = action;
-            //需要展示什么风格，自己修改一下参数
+            //What style needs to be displayed, modify the parameters yourself
             return {
               size: 'small',
               text: actionText,

@@ -11,7 +11,7 @@ import { ContentTypeEnum } from '@/enums/httpEnum';
 export * from './axiosTransform';
 
 /**
- * @description:  axios模块
+ * @description: axios module
  */
 export class VAxios {
   private axiosInstance: AxiosInstance;
@@ -28,7 +28,7 @@ export class VAxios {
   }
 
   /**
-   * @description: 重新配置axios
+   * @description: reconfigure axios
    */
   configAxios(config: CreateAxiosOptions) {
     if (!this.axiosInstance) {
@@ -36,9 +36,8 @@ export class VAxios {
     }
     this.createAxios(config);
   }
-
   /**
-   * @description: 设置通用header
+   * @description: set the generic header
    */
   setHeader(headers: any): void {
     if (!this.axiosInstance) {
@@ -48,7 +47,7 @@ export class VAxios {
   }
 
   /**
-   * @description:   请求方法
+   * @description: request method
    */
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     let conf: AxiosRequestConfig = cloneDeep(config);
@@ -63,7 +62,7 @@ export class VAxios {
       conf = beforeRequestHook(conf, opt);
     }
 
-    //这里重新 赋值成最新的配置
+    //Reassign here to the latest configuration
     // @ts-ignore
     conf.requestOptions = opt;
 
@@ -71,7 +70,7 @@ export class VAxios {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
-          // 请求是否被取消
+          // whether the request was canceled
           const isCancel = axios.isCancel(res);
           if (transformRequestData && isFunction(transformRequestData) && !isCancel) {
             try {
@@ -93,9 +92,8 @@ export class VAxios {
         });
     });
   }
-
   /**
-   * @description:  创建axios实例
+   * @description: Create axios instance
    */
   private createAxios(config: CreateAxiosOptions): void {
     this.axiosInstance = axios.create(config);
@@ -107,7 +105,7 @@ export class VAxios {
   }
 
   /**
-   * @description:  文件上传
+   * @description: file upload
    */
   uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
     const formData = new window.FormData();
@@ -145,7 +143,7 @@ export class VAxios {
   }
 
   /**
-   * @description: 拦截器配置
+   * @description: interceptor configuration
    */
   private setupInterceptors() {
     const transform = this.getTransform();
@@ -161,7 +159,7 @@ export class VAxios {
 
     const axiosCanceler = new AxiosCanceler();
 
-    // 请求拦截器配置处理
+    // request interceptor configuration processing
     this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
       const {
         headers: { ignoreCancelToken },
@@ -178,12 +176,12 @@ export class VAxios {
       return config;
     }, undefined);
 
-    // 请求拦截器错误捕获
+    // request interceptor error capture
     requestInterceptorsCatch &&
       isFunction(requestInterceptorsCatch) &&
       this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch);
 
-    // 响应结果拦截器处理
+    // Response result interceptor processing
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
       res && axiosCanceler.removePending(res.config);
       if (responseInterceptors && isFunction(responseInterceptors)) {
@@ -192,7 +190,7 @@ export class VAxios {
       return res;
     }, undefined);
 
-    // 响应结果拦截器错误捕获
+    // Response result interceptor error capture
     responseInterceptorsCatch &&
       isFunction(responseInterceptorsCatch) &&
       this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch);

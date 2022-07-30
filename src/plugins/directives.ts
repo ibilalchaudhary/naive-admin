@@ -3,10 +3,10 @@ import { App } from 'vue';
 import { permission } from '@/directives/permission';
 
 /**
- * 注册全局自定义指令
+ * Register a global custom directive
  * @param app
  */
 export function setupDirectives(app: App) {
-  // 权限控制指令（演示）
+  // Access Control Instructions
   app.directive('permission', permission);
 }

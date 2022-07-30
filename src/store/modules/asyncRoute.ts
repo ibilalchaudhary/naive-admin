@@ -73,17 +73,17 @@ export const useAsyncRouteStore = defineStore({
     setDynamicAddedRoute(added: boolean) {
       this.isDynamicAddedRoute = added;
     },
-    // 设置动态路由
+    // set dynamic routing
     setRouters(routers) {
       this.addRouters = routers;
       this.routers = constantRouter.concat(routers);
     },
     setMenus(menus) {
-      // 设置动态路由
+      // set dynamic routing
       this.menus = menus;
     },
     setKeepAliveComponents(compNames) {
-      // 设置需要缓存的组件
+      // Set the components that need to be cached
       this.keepAliveComponents = compNames;
     },
     async generateRoutes(data) {
@@ -98,7 +98,7 @@ export const useAsyncRouteStore = defineStore({
       const { getPermissionMode } = useProjectSetting();
       const permissionMode = unref(getPermissionMode);
       if (permissionMode === 'BACK') {
-        // 动态获取菜单
+        // get the menu dynamically
         try {
           accessedRouters = await generatorDynamicRouter();
         } catch (error) {
@@ -106,7 +106,7 @@ export const useAsyncRouteStore = defineStore({
         }
       } else {
         try {
-          //过滤账户是否拥有某一个权限，并将菜单从加载列表移除
+          //Filter whether the account has a certain permission, and remove the menu from the load list
           accessedRouters = filter(asyncRoutes, routeFilter);
         } catch (error) {
           console.log(error);

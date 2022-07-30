@@ -1,8 +1,8 @@
 export const animates = [
-  { value: 'zoom-fade', label: '渐变' },
-  { value: 'zoom-out', label: '闪现' },
-  { value: 'fade-slide', label: '滑动' },
-  { value: 'fade', label: '消退' },
-  { value: 'fade-bottom', label: '底部消退' },
-  { value: 'fade-scale', label: '缩放消退' },
+  { value: 'zoom-fade', label: 'Step by step change' },
+  { value: 'zoom-out', label: 'zoom-out' },
+  { value: 'fade-slide', label: 'fade-slide' },
+  { value: 'fade', label: 'fade' },
+  { value: 'fade-bottom', label: 'fade-bottom' },
+  { value: 'fade-scale', label: 'fade-scale' },
 ];

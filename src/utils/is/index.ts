@@ -1,21 +1,21 @@
 const toString = Object.prototype.toString;
 
 /**
- * @description: 判断值是否未某个类型
+ * @description: Determine if the value is not of a certain type
  */
 export function is(val: unknown, type: string) {
   return toString.call(val) === `[object ${type}]`;
 }
 
 /**
- * @description:  是否为函数
+ * @description: is it a function
  */
 export function isFunction<T = Function>(val: unknown): val is T {
   return is(val, 'Function') || is(val, 'AsyncFunction');
 }
 
 /**
- * @description: 是否已定义
+ * @description: is it defined
  */
 export const isDef = <T = unknown>(val?: T): val is T => {
   return typeof val !== 'undefined';
@@ -25,70 +25,70 @@ export const isUnDef = <T = unknown>(val?: T): val is T => {
   return !isDef(val);
 };
 /**
- * @description: 是否为对象
+ * @description: is it an object
  */
 export const isObject = (val: any): val is Record<any, any> => {
   return val !== null && is(val, 'Object');
 };
 
 /**
- * @description:  是否为时间
+ * @description: is it time
  */
 export function isDate(val: unknown): val is Date {
   return is(val, 'Date');
 }
 
 /**
- * @description:  是否为数值
+ * @description: is it a numeric value
  */
 export function isNumber(val: unknown): val is number {
   return is(val, 'Number');
 }
 
 /**
- * @description:  是否为AsyncFunction
+ * @description: Is it an AsyncFunction
  */
 export function isAsyncFunction<T = any>(val: unknown): val is Promise<T> {
   return is(val, 'AsyncFunction');
 }
 
 /**
- * @description:  是否为promise
+ * @description: is it a promise
  */
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
   return is(val, 'Promise') && isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
 /**
- * @description:  是否为字符串
+ * @description: is it a string
  */
 export function isString(val: unknown): val is string {
   return is(val, 'String');
 }
 
 /**
- * @description:  是否为boolean类型
+ * @description: whether it is a boolean type
  */
 export function isBoolean(val: unknown): val is boolean {
   return is(val, 'Boolean');
 }
 
 /**
- * @description:  是否为数组
+ * @description: is it an array
  */
 export function isArray(val: any): val is Array<any> {
   return val && Array.isArray(val);
 }
 
 /**
- * @description: 是否客户端
+ * @description: whether the client
  */
 export const isClient = () => {
   return typeof window !== 'undefined';
 };
 
 /**
- * @description: 是否为浏览器
+ * @description: is it a browser
  */
 export const isWindow = (val: any): val is Window => {
   return typeof window !== 'undefined' && is(val, 'Window');
@@ -100,7 +100,7 @@ export const isElement = (val: unknown): val is Element => {
 
 export const isServer = typeof window === 'undefined';
 
-// 是否为图片节点
+// Whether it is an image node
 export function isImageDom(o: Element) {
   return o && ['IMAGE', 'IMG'].includes(o.tagName);
 }

@@ -4,7 +4,7 @@
  * @constructor
  */
 export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
-  // 权重：系统 + 系统版本 > 平台 > 内核 + 载体 + 内核版本 + 载体版本 > 外壳 + 外壳版本
+  // weights: system + system version > platform > kernel + carrier + kernel version + carrier version > shell + shell version
   const ua = navigator.userAgent.toLowerCase();
   const testUa = (regexp) => regexp.test(ua);
   const testVs = (regexp) =>
@@ -13,17 +13,17 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
       ?.toString()
       .replace(/[^0-9|_.]/g, '')
       .replace(/_/g, '.');
-  // 系统
+  // system
   const system =
     new Map([
-      [testUa(/windows|win32|win64|wow32|wow64/g), 'windows'], // windows系统
-      [testUa(/macintosh|macintel/g), 'macos'], // macos系统
-      [testUa(/x11/g), 'linux'], // linux系统
-      [testUa(/android|adr/g), 'android'], // android系统
-      [testUa(/ios|iphone|ipad|ipod|iwatch/g), 'ios'], // ios系统
+      [testUa(/windows|win32|win64|wow32|wow64/g), 'windows'], // windows system
+      [testUa(/macintosh|macintel/g), 'macos'], // macos system
+      [testUa(/x11/g), 'linux'], // linux system
+      [testUa(/android|adr/g), 'android'], // android system
+      [testUa(/ios|iphone|ipad|ipod|iwatch/g), 'ios'], // ios system
     ]).get(true) || 'unknow';
 
-  // 系统版本
+  // system version
   const systemVs =
     new Map([
       [
@@ -44,34 +44,34 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
       ['ios', testVs(/os [\d._]+/g)],
     ]).get(system) || 'unknow';
 
-  // 平台
+  // platform
   let platform = 'unknow';
   if (system === 'windows' || system === 'macos' || system === 'linux') {
-    platform = 'desktop'; // 桌面端
+    platform = 'desktop'; // desktop
   } else if (system === 'android' || system === 'ios' || testUa(/mobile/g)) {
-    platform = 'mobile'; // 移动端
+    platform = 'mobile'; // mobile
   }
-  // 内核和载体
+  // kernel and vector
   const [engine = 'unknow', supporter = 'unknow'] = new Map([
     [
       testUa(/applewebkit/g),
       [
         'webkit',
         new Map([
-          // webkit内核
-          [testUa(/safari/g), 'safari'], // safari浏览器
-          [testUa(/chrome/g), 'chrome'], // chrome浏览器
-          [testUa(/opr/g), 'opera'], // opera浏览器
-          [testUa(/edge/g), 'edge'], // edge浏览器
+          // webkit kernel
+          [testUa(/safari/g), 'safari'], // safari browser
+          [testUa(/chrome/g), 'chrome'], // chrome browser
+          [testUa(/opr/g), 'opera'], // opera browser
+          [testUa(/edge/g), 'edge'], // edge browser
         ]).get(true),
       ] || 'unknow',
-    ], // [webkit内核, xxx浏览器]
-    [testUa(/gecko/g) && testUa(/firefox/g), ['gecko', 'firefox']], // [gecko内核,firefox浏览器]
-    [testUa(/presto/g), ['presto', 'opera']], // [presto内核,opera浏览器]
-    [testUa(/trident|compatible|msie/g), ['trident', 'iexplore']], // [trident内核,iexplore浏览器]
+    ], // [webkit kernel, xxx browser]
+    [testUa(/gecko/g) && testUa(/firefox/g), ['gecko', 'firefox']], // [gecko kernel,firefox browser]
+    [testUa(/presto/g), ['presto', 'opera']], // [presto kernel, opera browser]
+    [testUa(/trident|compatible|msie/g), ['trident', 'iexplore']], // [trident kernel, iexplore browser]
   ]).get(true) || ['unknow', 'unknow'];
 
-  // 内核版本
+  // kernel version
   const engineVs =
     new Map([
       ['webkit', testVs(/applewebkit\/[\d._]+/g)],
@@ -80,7 +80,7 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
       ['trident', testVs(/trident\/[\d._]+/g)],
     ]).get(engine) || 'unknow';
 
-  // 载体版本
+  // carrier version
   const supporterVs =
     new Map([
       ['firefox', testVs(/firefox\/[\d._]+/g)],
@@ -91,18 +91,17 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
       ['chrome', testVs(/chrome\/[\d._]+/g)],
     ]).get(supporter) || 'unknow';
 
-  // 外壳和外壳版本
+  // shell and shell version
   const [shell = 'none', shellVs = 'unknow'] = new Map([
-    [testUa(/micromessenger/g), ['wechat', testVs(/micromessenger\/[\d._]+/g)]], // [微信浏览器,]
-    [testUa(/qqbrowser/g), ['qq', testVs(/qqbrowser\/[\d._]+/g)]], // [QQ浏览器,]
-    [testUa(/ucbrowser/g), ['uc', testVs(/ucbrowser\/[\d._]+/g)]], // [UC浏览器,]
-    [testUa(/qihu 360se/g), ['360', 'unknow']], // [360浏览器(无版本),]
-    [testUa(/2345explorer/g), ['2345', testVs(/2345explorer\/[\d._]+/g)]], // [2345浏览器,]
-    [testUa(/metasr/g), ['sougou', 'unknow']], // [搜狗浏览器(无版本),]
-    [testUa(/lbbrowser/g), ['liebao', 'unknow']], // [猎豹浏览器(无版本),]
-    [testUa(/maxthon/g), ['maxthon', testVs(/maxthon\/[\d._]+/g)]], // [遨游浏览器,]
+    [testUa(/micromessenger/g), ['wechat', testVs(/micromessenger\/[\d._]+/g)]], // [Wechat browser,]
+    [testUa(/qqbrowser/g), ['qq', testVs(/qqbrowser\/[\d._]+/g)]], // [QQ browser,]
+    [testUa(/ucbrowser/g), ['uc', testVs(/ucbrowser\/[\d._]+/g)]], // [UC browser,]
+    [testUa(/qihu 360se/g), ['360', 'unknow']], // [360 browser (no version),]
+    [testUa(/2345explorer/g), ['2345', testVs(/2345explorer\/[\d._]+/g)]], // [2345explorer,]
+    [testUa(/metasr/g), ['sougou', 'unknow']], // [Sogou browser (no version),]
+    [testUa(/lbbrowser/g), ['liebao', 'unknow']], // [Cheetah browser (no version),]
+    [testUa(/maxthon/g), ['maxthon', testVs(/maxthon\/[\d._]+/g)]], // [Visit Browser,]
   ]).get(true) || ['none', 'unknow'];
-
   return {
     'zh-cn': Object.assign(
       {

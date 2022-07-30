@@ -18,17 +18,17 @@ const {
 } = projectSetting;
 
 interface ProjectSettingState {
-  navMode: string; //导航模式
-  navTheme: string; //导航风格
-  headerSetting: IheaderSetting; //顶部设置
-  showFooter: boolean; //页脚
-  menuSetting: ImenuSetting; //多标签
-  multiTabsSetting: ImultiTabsSetting; //多标签
-  crumbsSetting: IcrumbsSetting; //面包屑
-  permissionMode: string; //权限模式
-  isPageAnimate: boolean; //是否开启路由动画
-  pageAnimateType: string; //路由动画类型
-  isMobile: boolean; // 是否处于移动端模式
+  navMode: string; //navigation mode
+  navTheme: string; //Navigation style
+  headerSetting: IheaderSetting; //Top setting
+  showFooter: boolean; //footer
+  menuSetting: ImenuSetting; //Multiple labels
+  multiTabsSetting: ImultiTabsSetting; //Multiple tabs
+  crumbsSetting: IcrumbsSetting; //Breadcrumbs
+  permissionMode: string; //Permission mode
+  isPageAnimate: boolean; //Whether to enable routing animation
+  pageAnimateType: string; //Route animation type
+  isMobile: boolean; // Whether it is in mobile mode
 }
 
 export const useProjectSettingStore = defineStore({

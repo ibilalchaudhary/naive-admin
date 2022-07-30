@@ -1,4 +1,4 @@
-// axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
+// axios configuration can be changed according to the project, just change this file, other files can be left unchanged
 import { VAxios } from './Axios';
 import { AxiosTransform } from './axiosTransform';
 import axios, { AxiosResponse } from 'axios';
@@ -22,13 +22,12 @@ const urlPrefix = globSetting.urlPrefix || '';
 
 import router from '@/router';
 import { storage } from '@/utils/Storage';
-
 /**
- * @description: 数据处理，方便区分多种处理方式
+ * @description: Data processing, easy to distinguish between various processing methods
  */
 const transform: AxiosTransform = {
   /**
-   * @description: 处理请求数据
+   * @description: Process request data
    */
   transformRequestData: (res: AxiosResponse<Result>, options: RequestOptions) => {
     const {
@@ -41,12 +40,12 @@ const transform: AxiosTransform = {
       isReturnNativeResponse,
     } = options;
 
-    // 是否返回原生响应头 比如：需要获取响应头时使用该属性
+    // Whether to return native response headers For example: use this property when you need to get response headers
     if (isReturnNativeResponse) {
       return res;
     }
-    // 不进行任何处理，直接返回
-    // 用于页面代码可能需要直接获取code，data，message这些信息时开启
+    // don't do anything, just return
+    // When used for page code, it may be necessary to directly obtain code, data, and message information.
     if (!isTransformResponse) {
       return res.data;
     }
@@ -60,55 +59,55 @@ const transform: AxiosTransform = {
       // return '[HTTP] Request has no return value';
       throw new Error('请求出错，请稍候重试');
     }
-    //  这里 code，result，message为 后台统一的字段，需要修改为项目自己的接口返回格式
+    // Here code, result, and message are unified fields in the background, which need to be modified to the return format of the project's own interface
     const { code, result, message } = data;
-    // 请求成功
+    // request succeeded
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
-    // 是否显示提示信息
+    // Whether to display the prompt information
     if (isShowMessage) {
       if (hasSuccess && (successMessageText || isShowSuccessMessage)) {
-        // 是否显示自定义信息提示
+        // Whether to display custom information prompt
         $dialog.success({
           type: 'success',
-          content: successMessageText || message || '操作成功！',
+          content: successMessageText || message || 'The operation was successful! ',
         });
       } else if (!hasSuccess && (errorMessageText || isShowErrorMessage)) {
-        // 是否显示自定义信息提示
-        $message.error(message || errorMessageText || '操作失败！');
+        // Whether to display custom information prompt
+        $message.error(message || errorMessageText || 'The operation failed!');
       } else if (!hasSuccess && options.errorMessageMode === 'modal') {
-        // errorMessageMode=‘custom-modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
+        // When errorMessageMode='custom-modal', the modal error pop-up window will be displayed instead of the message prompt, which is used for some more important errors
         $dialog.info({
-          title: '提示',
+          title: 'Tips',
           content: message,
-          positiveText: '确定',
+          positiveText: 'OK',
           onPositiveClick: () => {},
         });
       }
     }
 
-    // 接口请求成功，直接返回结果
+    // The interface request is successful, and the result is returned directly
     if (code === ResultEnum.SUCCESS) {
       return result;
     }
-    // 接口请求错误，统一提示错误信息 这里逻辑可以根据项目进行修改
+    // The interface request is wrong, and the error message is displayed uniformly. The logic here can be modified according to the project
     let errorMsg = message;
     switch (code) {
-      // 请求失败
+      // Request failed
       case ResultEnum.ERROR:
         $message.error(errorMsg);
         break;
-      // 登录超时
+      // login timeout
       case ResultEnum.TIMEOUT:
         const LoginName = PageEnum.BASE_LOGIN_NAME;
         const LoginPath = PageEnum.BASE_LOGIN;
         if (router.currentRoute.value?.name === LoginName) return;
-        // 到登录页
-        errorMsg = '登录超时，请重新登录!';
+        // go to the login page
+        errorMsg = 'Login timed out, please log in again!';
         $dialog.warning({
-          title: '提示',
-          content: '登录身份已失效，请重新登录!',
-          positiveText: '确定',
-          //negativeText: '取消',
+          title: 'Tips',
+          content: 'The login identity has expired, please log in again!',
+          positiveText: 'OK',
+          //negativeText: 'Cancel',
           closable: false,
           maskClosable: false,
           onPositiveClick: () => {
@@ -122,7 +121,7 @@ const transform: AxiosTransform = {
     throw new Error(errorMsg);
   },
 
-  // 请求之前处理config
+  // Process config before request
   beforeRequestHook: (config, options) => {
     const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true, urlPrefix } = options;
 
@@ -139,10 +138,10 @@ const transform: AxiosTransform = {
     const data = config.data || false;
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
-        // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
+        // Add timestamp parameter to get request to avoid getting data from cache.
         config.params = Object.assign(params || {}, joinTimestamp(joinTime, false));
       } else {
-        // 兼容restful风格
+        // Compatible with restful style
         config.url = config.url + params + `${joinTimestamp(joinTime, true)}`;
         config.params = undefined;
       }
@@ -163,7 +162,7 @@ const transform: AxiosTransform = {
           );
         }
       } else {
-        // 兼容restful风格
+        // Compatible with restful style
         config.url = config.url + params;
         config.params = undefined;
       }
@@ -172,10 +171,10 @@ const transform: AxiosTransform = {
   },
 
   /**
-   * @description: 请求拦截器处理
+   * @description: Request interceptor processing
    */
   requestInterceptors: (config, options) => {
-    // 请求之前处理config
+    // Process config before request
     const userStore = useUserStoreWidthOut();
     const token = userStore.getToken;
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
@@ -188,27 +187,27 @@ const transform: AxiosTransform = {
   },
 
   /**
-   * @description: 响应错误处理
+   * @description: response error handling
    */
   responseInterceptorsCatch: (error: any) => {
     const $dialog = window['$dialog'];
     const $message = window['$message'];
     const { response, code, message } = error || {};
-    // TODO 此处要根据后端接口返回格式修改
+    // TODO here should be modified according to the back-end interface return format
     const msg: string =
       response && response.data && response.data.message ? response.data.message : '';
     const err: string = error.toString();
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
-        $message.error('接口请求超时，请刷新页面重试!');
+        $message.error('The interface request timed out, please refresh the page and try again!');
         return;
       }
       if (err && err.includes('Network Error')) {
         $dialog.info({
-          title: '网络异常',
-          content: '请检查您的网络连接是否正常',
-          positiveText: '确定',
-          //negativeText: '取消',
+          title: 'Network exception',
+          content: 'Please check if your network connection is normal',
+          positiveText: 'OK',
+          //negativeText: 'Cancel',
           closable: false,
           maskClosable: false,
           onPositiveClick: () => {},
@@ -219,12 +218,12 @@ const transform: AxiosTransform = {
     } catch (error) {
       throw new Error(error as any);
     }
-    // 请求是否被取消
+    // whether the request was canceled
     const isCancel = axios.isCancel(error);
     if (!isCancel) {
       checkStatus(error.response && error.response.status, msg);
     } else {
-      console.warn(error, '请求被取消！');
+      console.warn(error, 'The request was cancelled!');
     }
     //return Promise.reject(error);
     return Promise.reject(response?.data);
@@ -237,34 +236,34 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
       {
         timeout: 10 * 1000,
         authenticationScheme: '',
-        // 接口前缀
+        // interface prefix
         prefixUrl: urlPrefix,
         headers: { 'Content-Type': ContentTypeEnum.JSON },
-        // 数据处理方式
+        // data processing method
         transform,
-        // 配置项，下面的选项都可以在独立的接口请求中覆盖
+        // Configuration items, the following options can be overridden in independent interface requests
         requestOptions: {
-          // 默认将prefix 添加到url
+          // add prefix to url by default
           joinPrefix: true,
-          // 是否返回原生响应头 比如：需要获取响应头时使用该属性
+          // Whether to return native response headers For example: use this property when you need to get response headers
           isReturnNativeResponse: false,
-          // 需要对返回数据进行处理
+          // need to process the returned data
           isTransformResponse: true,
-          // post请求的时候添加参数到url
+          //Add parameters to the url when post request
           joinParamsToUrl: false,
-          // 格式化提交参数时间
+          // format submit parameter time
           formatDate: true,
-          // 消息提示类型
+          // message type
           errorMessageMode: 'none',
-          // 接口地址
+          // interface address
           apiUrl: globSetting.apiUrl,
-          // 接口拼接地址
+          // interface splicing address
           urlPrefix: urlPrefix,
-          //  是否加入时间戳
+          // Whether to add timestamp
           joinTime: true,
-          // 忽略重复请求
+          // ignore duplicate requests
           ignoreCancelToken: true,
-          // 是否携带token
+          // Whether to carry the token
           withToken: true,
         },
         withCredentials: false,
@@ -273,15 +272,14 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
     )
   );
 }
-
 export const http = createAxios();
 
-// 项目，多个不同 api 地址，直接在这里导出多个
-// src/api ts 里面接口，就可以单独使用这个请求，
+// Project, multiple different api addresses, export multiple directly here
+// The interface in src/api ts, you can use this request alone,
 // import { httpTwo } from '@/utils/http/axios'
 // export const httpTwo = createAxios({
-//   requestOptions: {
-//     apiUrl: 'http://localhost:9001',
-//     urlPrefix: 'api',
-//   },
+// requestOptions: {
+// apiUrl: 'http://localhost:9001',
+// urlPrefix: 'api',
+// },
 // });

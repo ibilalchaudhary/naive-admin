@@ -1,5 +1,5 @@
 /**
- * 数据处理类，可以根据项目自行配置
+ * Data processing class, which can be configured according to the project
  */
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { RequestOptions, Result } from './types';
@@ -12,23 +12,23 @@ export interface CreateAxiosOptions extends AxiosRequestConfig {
 
 export abstract class AxiosTransform {
   /**
-   * @description: 请求之前处理配置
+   * @description: Process configuration before request
    * @description: Process configuration before request
    */
   beforeRequestHook?: (config: AxiosRequestConfig, options: RequestOptions) => AxiosRequestConfig;
 
   /**
-   * @description: 请求成功处理
+   * @description: The request was processed successfully
    */
   transformRequestData?: (res: AxiosResponse<Result>, options: RequestOptions) => any;
 
   /**
-   * @description: 请求失败处理
+   * @description: request failure handling
    */
   requestCatch?: (e: Error) => Promise<any>;
 
   /**
-   * @description: 请求之前的拦截器
+   * @description: the interceptor before the request
    */
   requestInterceptors?: (
     config: AxiosRequestConfig,
@@ -36,17 +36,17 @@ export abstract class AxiosTransform {
   ) => AxiosRequestConfig;
 
   /**
-   * @description: 请求之后的拦截器
+   * @description: the interceptor after the request
    */
   responseInterceptors?: (res: AxiosResponse<any>) => AxiosResponse<any>;
 
   /**
-   * @description: 请求之前的拦截器错误处理
+   * @description: Interceptor error handling before request
    */
   requestInterceptorsCatch?: (error: Error) => void;
 
   /**
-   * @description: 请求之后的拦截器错误处理
+   * @description: Interceptor error handling after request
    */
   responseInterceptorsCatch?: (error: Error) => void;
 }
